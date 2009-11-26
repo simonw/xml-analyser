@@ -1,10 +1,13 @@
 <example>
   <foo>
     <bar a="1" b="2">
-      <baz />
+      <baz>This has text</baz>
     </bar>
   </foo>
   <foo>
-    <bar a="1" b="2" c="3" />
+    <bar a="1" b="2" c="3">
+      <baz>More text here</baz>
+    </bar>
+    <baz d="1" />
   </foo>
 </example>

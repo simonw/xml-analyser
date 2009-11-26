@@ -13,6 +13,7 @@ class ElementStats(object):
             parent = parent_lookups.get(el, None)
             tag = el.tag
             el_stats = self.stats.setdefault(tag, {})
+            el_stats['count'] = el_stats.get('count', 0) + 1
             # Update parent count
             parent_counts = el_stats.setdefault('parent_counts', {})
             if parent:
@@ -27,6 +28,14 @@ class ElementStats(object):
                 child_counts[child.tag] = child_counts.get(child.tag, 0) + 1
                 # Update parent_lookups while we're at it
                 parent_lookups[child] = el
+            # If this has text, update text statistics
+            if el.text is not None and not el.text.isspace():
+                el_stats['count_with_text'] = el_stats.get(
+                    'count_with_text', 0
+                ) + 1
+                el_stats['max_text_length'] = max(
+                    len(el.text), el_stats.get('max_text_length', 0)
+                )
 
 if __name__ == '__main__':
     import sys
