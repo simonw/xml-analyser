@@ -1,0 +1,10 @@
+<example>
+  <foo>
+    <bar a="1" b="2">
+      <baz />
+    </bar>
+  </foo>
+  <foo>
+    <bar a="1" b="2" c="3" />
+  </foo>
+</example>
