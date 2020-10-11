@@ -1,7 +1,11 @@
 import argparse
-import pprint
+import json
 import sys
 from . import ElementStats, ET
+
+
+def pprint(stats):
+    print(json.dumps(stats, indent=4))
 
 
 def main(args=None, pprint=pprint):
