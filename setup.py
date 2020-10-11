@@ -32,8 +32,6 @@ setup(
         xml-analyser=xml_analyser.cli:main
     """,
     install_requires=[],
-    extras_require={
-        "test": ["pytest"]
-    },
+    extras_require={"test": ["pytest"]},
     tests_require=["xml-analyser[test]"],
 )
