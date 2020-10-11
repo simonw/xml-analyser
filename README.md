@@ -1,13 +1,17 @@
-# xml_analyser.py
+# xml-analyser
 
-A simple tool for showing various statistics about element usage in an 
-arbitrary XML file.
+[![PyPI](https://img.shields.io/pypi/v/xml-analyser.svg)](https://pypi.org/project/xml-analyser/)
+[![Changelog](https://img.shields.io/github/v/release/simonw/xml-analyser?include_prereleases&label=changelog)](https://github.com/simonw/xml-analyser/releases)
+[![Tests](https://github.com/simonw/xml-analyser/workflows/Test/badge.svg)](https://github.com/simonw/xml-analyser/actions?query=workflow%3ATest)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/simonw/xml-analyser/blob/main/LICENSE)
+
+A tool showing various statistics about element usage in an arbitrary XML file.
 
 Usage:
 
     xml-analyser example.xml
 
-If example.xml looks like this:
+If `example.xml` looks like this:
 
 ```xml
 <example>
@@ -23,24 +27,57 @@ If example.xml looks like this:
     <baz d="1" />
   </foo>
 </example>
+```
 
-xml_analyser outputs this:
+`xml-analyzer example.xml` outputs this:
 
-    {'bar': {'attr_counts': {'a': 2, 'b': 2, 'c': 1},
-            'child_counts': {'baz': 2},
-            'count': 2,
-            'parent_counts': {'foo': 2}},
-    'baz': {'attr_counts': {'d': 1},
-            'child_counts': {},
-            'count': 3,
-            'count_with_text': 2,
-            'max_text_length': 14,
-            'parent_counts': {'bar': 2, 'foo': 1}},
-    'example': {'attr_counts': {},
-                'child_counts': {'foo': 2},
-                'count': 1,
-                'parent_counts': {}},
-    'foo': {'attr_counts': {},
-            'child_counts': {'bar': 2, 'baz': 1},
-            'count': 2,
-            'parent_counts': {'example': 2}}}
+```json
+{
+    "example": {
+        "count": 1,
+        "parent_counts": {},
+        "attr_counts": {},
+        "child_counts": {
+            "foo": 2
+        }
+    },
+    "foo": {
+        "count": 2,
+        "parent_counts": {
+            "example": 2
+        },
+        "attr_counts": {},
+        "child_counts": {
+            "bar": 2,
+            "baz": 1
+        }
+    },
+    "bar": {
+        "count": 2,
+        "parent_counts": {
+            "foo": 2
+        },
+        "attr_counts": {
+            "a": 2,
+            "b": 2,
+            "c": 1
+        },
+        "child_counts": {
+            "baz": 2
+        }
+    },
+    "baz": {
+        "count": 3,
+        "parent_counts": {
+            "bar": 2,
+            "foo": 1
+        },
+        "attr_counts": {
+            "d": 1
+        },
+        "child_counts": {},
+        "count_with_text": 2,
+        "max_text_length": 14
+    }
+}
+```
