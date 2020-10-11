@@ -9,7 +9,7 @@ class ElementStats(object):
     def analyze(self):
         "Count number of occurrences of each element"
         parent_lookups = {}
-        for el in self.et.getiterator():
+        for el in self.et.iter():
             parent = parent_lookups.get(el, None)
             tag = el.tag
             el_stats = self.stats.setdefault(tag, {})
@@ -24,7 +24,7 @@ class ElementStats(object):
                 attr_counts[attr] = attr_counts.get(attr, 0) + 1
             # Update child counts
             child_counts = el_stats.setdefault('child_counts', {})
-            for child in el.getchildren():
+            for child in el:
                 child_counts[child.tag] = child_counts.get(child.tag, 0) + 1
                 # Update parent_lookups while we're at it
                 parent_lookups[child] = el
@@ -36,14 +36,3 @@ class ElementStats(object):
                 el_stats['max_text_length'] = max(
                     len(el.text), el_stats.get('max_text_length', 0)
                 )
-
-if __name__ == '__main__':
-    import sys
-    filename = sys.argv[-1]
-    try:
-        et = ET.parse(open(filename))
-    except:
-        print "Usage: %s <filename.xml>" % sys.argv[0]
-        sys.exit(1)
-    from pprint import pprint
-    pprint(ElementStats(et).stats)
