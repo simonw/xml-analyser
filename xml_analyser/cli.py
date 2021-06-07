@@ -14,8 +14,12 @@ def main(args=None, pprint=pprint):
     )
     parser.add_argument("filepath", type=str, help="Path to the XML file")
     res = parser.parse_args(args)
+    if res.filepath == "-":
+        fp = sys.stdin
+    else:
+        fp = open(res.filepath)
     try:
-        et = ET.parse(open(res.filepath))
+        et = ET.parse(fp)
     except Exception as e:
         print(e)
         sys.exit(1)
