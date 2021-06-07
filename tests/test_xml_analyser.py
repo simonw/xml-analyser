@@ -12,7 +12,13 @@ def capture(stats):
                 "count": 1,
                 "parent_counts": {},
                 "attr_counts": {},
-                "child_counts": {"foo": 2},
+                "child_counts": {"atop": 1, "foo": 2},
+            },
+            "atop": {
+                "count": 1,
+                "parent_counts": {"example": 1},
+                "attr_counts": {"title": 1},
+                "child_counts": {},
             },
             "bar": {
                 "count": 2,

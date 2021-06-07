@@ -1,4 +1,5 @@
 <example>
+  <atop title="Example" />
   <foo>
     <bar a="1" b="2">
       <baz>This has text</baz>

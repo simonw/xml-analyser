@@ -35,7 +35,14 @@ class ElementStats(object):
                 el_stats["max_text_length"] = max(
                     len(el.text), el_stats.get("max_text_length", 0)
                 )
-        # Sort results by their count
+        # Sort results by their count, with parent counts as tie-breaker
         self.stats = dict(
-            sorted(self.stats.items(), key=lambda p: (p[1]["count"], p[0]))
+            sorted(
+                self.stats.items(),
+                key=lambda p: (
+                    p[1]["count"],
+                    sum(p[1]["parent_counts"].values()),
+                    p[0],
+                ),
+            )
         )
