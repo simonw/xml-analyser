@@ -46,3 +46,23 @@ class ElementStats(object):
                 ),
             )
         )
+
+
+def truncate_xml(el, max=2):
+    """
+    For each element with multiple children of the same type, truncate
+    to just 'max' examples of that type
+    """
+    counts = {}
+    to_remove = []
+    for child in el:
+        count = counts.get(child.tag, 0)
+        if count >= max:
+            to_remove.append(child)
+        counts[child.tag] = count + 1
+    for item in reversed(to_remove):
+        el.remove(item)
+    # Apply recursively
+    for child in el:
+        truncate_xml(child)
+    return el

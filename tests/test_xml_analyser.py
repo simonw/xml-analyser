@@ -1,11 +1,15 @@
 from xml_analyser.cli import main
+import json
 import pathlib
 import sys
+import textwrap
 
 example_xml = pathlib.Path(__file__).parent / "example.xml"
+example_truncate_xml = pathlib.Path(__file__).parent / "example-truncate.xml"
 
 
-def capture(stats):
+def capture(output):
+    stats = json.loads(output)
     assert tuple(stats.items()) == tuple(
         {
             "example": {
@@ -45,10 +49,41 @@ def capture(stats):
 
 
 def test_xml_analyser():
-    main([str(example_xml)], capture)
+    main([str(example_xml)], output=capture)
 
 
 def test_xml_analyser_stdin():
     old_stdin = sys.stdin
     sys.stdin = open(example_xml)
-    main("-", capture)
+    main("-", output=capture)
+
+
+def check_truncated(output):
+    assert (
+        output.strip()
+        == textwrap.dedent(
+            """
+    <example>
+      <atop title="Example 1" />
+      <atop title="Example 2" />
+      <foo>
+        <bar a="1" b="2">
+          <baz>This has text</baz>
+        </bar>
+        <bar a="2" b="2">
+          <baz>This has text</baz>
+        </bar>
+      </foo>
+      <foo>
+        <bar a="1" b="2" c="3">
+          <baz>More text here</baz>
+        </bar>
+        <baz d="1" />
+      </foo>
+    </example>"""
+        ).strip()
+    )
+
+
+def test_xml_analyser_truncate():
+    main([str(example_truncate_xml), "--truncate"], output=check_truncated)
