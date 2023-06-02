@@ -7,7 +7,15 @@
 
 A tool showing various statistics about element usage in an arbitrary XML file.
 
-Usage:
+## Installation
+
+    pip install xml-analyser
+
+Or using [pipx](https://pypa.github.io/pipx/):
+
+    pipx install xml-analyser
+
+## Usage
 
     xml-analyser example.xml
 
